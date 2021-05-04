@@ -36,9 +36,13 @@ namespace COA.Services
             _userRepository.CreateUsuario(usuario);
         }
 
-        public void Update(Usuario usuario)
+        public void Update(Usuario userToUpdate, Usuario usuario)
         {
-            _userRepository.UpdateUsuario(usuario);
+            userToUpdate.UserName = usuario.UserName;
+            userToUpdate.Nombre = usuario.Nombre;
+            userToUpdate.Email = usuario.Email;
+            userToUpdate.Telefono = usuario.Telefono;
+            _userRepository.UpdateUsuario(userToUpdate);
         }
 
         public void Delete(Usuario usuario)

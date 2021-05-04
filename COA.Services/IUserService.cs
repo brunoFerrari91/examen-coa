@@ -10,7 +10,7 @@ namespace COA.Services
         IEnumerable<Usuario> GetAll();
         Usuario GetById(int id);
         void Create(Usuario usuario);
-        void Update(Usuario usuario);
+        void Update(Usuario userToUpdate, Usuario usuario);
         void Delete(Usuario usuario);
     }
 }
