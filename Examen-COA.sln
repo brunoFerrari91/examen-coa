@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COA.Data", "COA.Data\COA.Data.csproj", "{7589A884-1730-43EA-BBD5-C1A519F3A5FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COA.Data", "COA.Data\COA.Data.csproj", "{7589A884-1730-43EA-BBD5-C1A519F3A5FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COA.Mvc", "COA.Mvc\COA.Mvc.csproj", "{A9F38ABB-4BF6-44DC-8AFD-121453A82B6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COA.Mvc", "COA.Mvc\COA.Mvc.csproj", "{A9F38ABB-4BF6-44DC-8AFD-121453A82B6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COA.Services", "COA.Services\COA.Services.csproj", "{46D490CF-952C-449E-A7AE-F3A3F3F49C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COA.Services", "COA.Services\COA.Services.csproj", "{46D490CF-952C-449E-A7AE-F3A3F3F49C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COA.Api", "COA.Api\COA.Api.csproj", "{2926DF46-020F-4586-8941-421C67910AF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{46D490CF-952C-449E-A7AE-F3A3F3F49C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46D490CF-952C-449E-A7AE-F3A3F3F49C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46D490CF-952C-449E-A7AE-F3A3F3F49C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2926DF46-020F-4586-8941-421C67910AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2926DF46-020F-4586-8941-421C67910AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2926DF46-020F-4586-8941-421C67910AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2926DF46-020F-4586-8941-421C67910AF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
