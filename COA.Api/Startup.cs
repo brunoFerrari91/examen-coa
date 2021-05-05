@@ -1,3 +1,4 @@
+using COA.Api.Resources;
 using COA.Data;
 using COA.Data.Models;
 using COA.Services;
@@ -8,12 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace COA.Api
 {
@@ -26,10 +23,33 @@ namespace COA.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            #region Error Handling Data validation
+            services.AddControllers().ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    // This code is executed when invalid ModelState occurs
+                    ErrorDetails error = new ErrorDetails();
+                    error.StatusCode = 400; // Set BadRequest error
+                    // Map ModelState dictionary to Error dictionary
+                    var dictionary = actionContext.ModelState;
+                    error.ErrorList = new Dictionary<string, List<string>>();
+                    // Add every invalid ModelState to the Errors List
+                    foreach (var validationError in dictionary)
+                    {
+                        List<string> errorList = new List<string>();
+                        foreach (var innerError in validationError.Value.Errors)
+                        {
+                            errorList.Add(innerError.ErrorMessage);
+                        }
+                        error.ErrorList.Add(validationError.Key != "" ? validationError.Key : "error", errorList);
+                    }
+                    return new BadRequestObjectResult(error);
+                };
+            });
+            #endregion
             services.AddDbContext<ExamenDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ExamenDB")));
             services.AddTransient<IUserRepository, UserRepository>();
@@ -48,6 +68,8 @@ namespace COA.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
 

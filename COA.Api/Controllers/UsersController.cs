@@ -3,10 +3,7 @@ using COA.Api.Resources;
 using COA.Data.Models;
 using COA.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace COA.Api.Controllers
@@ -34,74 +31,35 @@ namespace COA.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            try
-            {
-                var user = _service.GetById(id);
-                if (user == null)
-                {   
-                    return NotFound();
-                }
-                var userResource = _mapper.Map<Usuario, UserResource>(user);
-                return Ok(userResource);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var user = _service.GetById(id);
+            var userResource = _mapper.Map<Usuario, UserResource>(user);
+            return Ok(userResource);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] UserResource user)
         {
-            try
-            {
-                var userToCreate = _mapper.Map<UserResource, Usuario>(user);
-                _service.Create(userToCreate);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            var userToCreate = _mapper.Map<UserResource, Usuario>(user);
+            _service.Create(userToCreate);
+            return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UserResource user)
         {
-            try
-            {
-                var userToUpdate = _service.GetById(id);
-                if (userToUpdate == null)
-                {
-                    return NotFound();
-                }
-                var userResource = _mapper.Map<UserResource, Usuario>(user);
-                _service.Update(userToUpdate, userResource);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var userToUpdate = _service.GetById(id);
+            var userResource = _mapper.Map<UserResource, Usuario>(user);
+            _service.Update(userToUpdate, userResource);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                var userToDelete= _service.GetById(id);
-                if (userToDelete == null)
-                {
-                    return NotFound();
-                }
-                _service.Delete(userToDelete);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var userToDelete = _service.GetById(id);
+            _service.Delete(userToDelete);
+            return Ok();
         }
     }
 }
