@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace COA.Api.Resources
 {
     public class UserResource
     {
+        public int IdUsuario { get; set; }
+
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [StringLength(50, ErrorMessage = "El campo {0} no debe superar los 50 caracteres")]
         public string UserName { get; set; }

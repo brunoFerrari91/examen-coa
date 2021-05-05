@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace COA.Mvc.Models
 {
     public class UserViewModel
     {
+        [HiddenInput(DisplayValue = false)]
+        public int IdUsuario { get; set; }
+
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [StringLength(50, ErrorMessage = "El campo {0} no debe superar los 50 caracteres")]
         public string UserName { get; set; }
