@@ -46,6 +46,27 @@ namespace COA.Mvc.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                //Get user to show in view and check if exists
+                var client = _httpFactory.CreateClient("COA-Api");
+                var response = await client.GetAsync($"/api/users/{id}");
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                string content = await response.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<UserViewModel>(content);
+                return View("Create", user);
+            }
+            catch
+            {
+                throw;
+            }            
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(UserViewModel newUser)
         {
@@ -58,7 +79,15 @@ namespace COA.Mvc.Controllers
                 var client = _httpFactory.CreateClient("COA-Api");
                 var jsonUser = JsonConvert.SerializeObject(newUser);
                 var stringContent = new StringContent(jsonUser, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("/api/users", stringContent);
+                HttpResponseMessage response;
+                if (newUser.IdUsuario == 0) // Default value for new user
+                {
+                    response = await client.PostAsync("/api/users", stringContent);
+                }
+                else // User already exists
+                {
+                    response = await client.PutAsync($"/api/users/{newUser.IdUsuario}", stringContent);
+                }
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     return RedirectToAction("Error", "Home");
