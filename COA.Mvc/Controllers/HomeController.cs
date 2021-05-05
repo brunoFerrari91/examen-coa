@@ -1,10 +1,11 @@
 ﻿using COA.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace COA.Mvc.Controllers
@@ -13,19 +14,23 @@ namespace COA.Mvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHttpClientFactory _httpFactory;
+        public HomeController(IHttpClientFactory httpFactory)
         {
-            _logger = logger;
+            _httpFactory = httpFactory;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var client = _httpFactory.CreateClient("COA-Api");
+            var response = await client.GetAsync("/api/users");
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                RedirectToAction("Error", "Home");
+            }
+            string content = await response.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<UserViewModel>>(content);
+            return View(users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
