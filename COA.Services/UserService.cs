@@ -2,7 +2,6 @@
 using COA.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace COA.Services
 {
@@ -21,14 +20,17 @@ namespace COA.Services
 
         public Usuario GetById(int id)
         {
-            if (id > 0)
+            if (id <= 0)
             {
-                return _userRepository.GetUsuario(id);
+                throw new ArgumentOutOfRangeException(null, "El ID debe ser mayor a cero");
             }
-            else
+            var user = _userRepository.GetUsuario(id);
+            if (user == null)
             {
-                throw new ArgumentOutOfRangeException("El Id debe ser mayor a cero");
+                throw new KeyNotFoundException("Usuario no encontrado");
             }
+            return user;
+
         }
 
         public void Create(Usuario usuario)
