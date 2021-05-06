@@ -13,8 +13,6 @@ namespace COA.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly IHttpClientFactory _httpFactory;
         public HomeController(IHttpClientFactory httpFactory)
         {
@@ -43,7 +41,7 @@ namespace COA.Mvc.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            return View(new UserViewModel());
         }
 
         public async Task<IActionResult> Edit(int id)
