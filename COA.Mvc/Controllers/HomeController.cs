@@ -1,9 +1,7 @@
 ﻿using COA.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -25,17 +23,19 @@ namespace COA.Mvc.Controllers
             {
                 var client = _httpFactory.CreateClient("COA-Api");
                 var response = await client.GetAsync("/api/users");
+                string content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Error", "Home");
+                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
+                    var errorMessage = error.ErrorList["error"][0];
+                    return View("error", errorMessage);
                 }
-                string content = await response.Content.ReadAsStringAsync();
                 var users = JsonConvert.DeserializeObject<List<UserViewModel>>(content);
                 return View(users);
             }
             catch
             {
-                throw;
+                return View("error");
             }
         }
 
@@ -51,17 +51,19 @@ namespace COA.Mvc.Controllers
                 //Get user to show in view and check if exists
                 var client = _httpFactory.CreateClient("COA-Api");
                 var response = await client.GetAsync($"/api/users/{id}");
+                string content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Error", "Home");
+                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
+                    var errorMessage = error.ErrorList["error"][0];
+                    return View("error", errorMessage);
                 }
-                string content = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<UserViewModel>(content);
                 return View("Create", user);
             }
             catch
             {
-                throw;
+                return View("error");
             }            
         }
 
@@ -86,15 +88,18 @@ namespace COA.Mvc.Controllers
                 {
                     response = await client.PutAsync($"/api/users/{newUser.IdUsuario}", stringContent);
                 }
+                string content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Error", "Home");
+                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
+                    var errorMessage = error.ErrorList["error"][0];
+                    return View("error", errorMessage);
                 }
                 return RedirectToAction("Index", "Home");
             }
             catch
             {
-                throw;
+                return View("error");
             }
         }
 
@@ -105,17 +110,19 @@ namespace COA.Mvc.Controllers
                 //Get user to show in view and check if exists
                 var client = _httpFactory.CreateClient("COA-Api");
                 var response = await client.GetAsync($"/api/users/{id}");
+                string content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Error", "Home");
+                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
+                    var errorMessage = error.ErrorList["error"][0];
+                    return View("error", errorMessage);
                 }
-                string content = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<UserViewModel>(content);
                 return View(user);
             }
             catch
             {
-                throw;
+                return View("error");
             }
         }
 
@@ -126,22 +133,19 @@ namespace COA.Mvc.Controllers
             {
                 var client = _httpFactory.CreateClient("COA-Api");
                 var response = await client.DeleteAsync($"/api/users/{id}");
+                string content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Error", "Home");
+                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
+                    var errorMessage = error.ErrorList["error"][0];
+                    return View("error", errorMessage);
                 }
                 return RedirectToAction("Index", "Home");
             }
             catch
             {
-                throw;
+                return View("error");
             }
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

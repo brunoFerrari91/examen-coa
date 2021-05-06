@@ -8,6 +8,7 @@ namespace COA.Mvc.Models
         [HiddenInput(DisplayValue = false)]
         public int IdUsuario { get; set; }
 
+        [Display(Name = "User")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [StringLength(50, ErrorMessage = "El campo {0} no debe superar los 50 caracteres")]
         public string UserName { get; set; }

@@ -1,11 +1,10 @@
 using System;
+using System.Collections.Generic;
 
 namespace COA.Mvc.Models
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public Dictionary<string, List<string>> ErrorList { get; set; }
     }
 }

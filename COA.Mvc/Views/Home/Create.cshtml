@@ -1,12 +1,12 @@
 ﻿@model COA.Mvc.Models.UserViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Actualizar";
 }
 
-<h1>Create</h1>
+<h1>Actualizar</h1>
 
-<h4>UserViewModel</h4>
+<h4>Usuario</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">        
@@ -37,14 +37,14 @@
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Confirmar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a Página principal</a>
 </div>
 
 @section Scripts {
