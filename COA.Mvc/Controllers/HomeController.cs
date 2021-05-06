@@ -66,7 +66,7 @@ namespace COA.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(UserViewModel newUser)
+        public async Task<IActionResult> Create([Bind]UserViewModel newUser)
         {
             if (!ModelState.IsValid)
             {
@@ -86,6 +86,46 @@ namespace COA.Mvc.Controllers
                 {
                     response = await client.PutAsync($"/api/users/{newUser.IdUsuario}", stringContent);
                 }
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                //Get user to show in view and check if exists
+                var client = _httpFactory.CreateClient("COA-Api");
+                var response = await client.GetAsync($"/api/users/{id}");
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                string content = await response.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<UserViewModel>(content);
+                return View(user);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                var client = _httpFactory.CreateClient("COA-Api");
+                var response = await client.DeleteAsync($"/api/users/{id}");
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     return RedirectToAction("Error", "Home");
