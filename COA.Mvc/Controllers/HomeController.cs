@@ -33,8 +33,17 @@ namespace COA.Mvc.Controllers
                     return View("error", errorMessage);
                 }
                 var users = JsonConvert.DeserializeObject<List<UserViewModel>>(content);
-                int pageNumber = (page ?? 1);                
-                return View(users.ToPagedList(pageNumber,10));
+                int pageNumber;                
+                if (page <= 0)
+                {
+                    return View("error", "Numero de página incorrecto");
+                }
+                else
+                {
+                    pageNumber = page ?? 1;
+                }
+                var usersPage = users.ToPagedList(pageNumber, 10);                
+;               return View(usersPage);
             }
             catch
             {
