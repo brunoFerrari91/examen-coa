@@ -12,6 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\COA.Services\COA.Services.csproj" />
   </ItemGroup>
-
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
 
 </Project>

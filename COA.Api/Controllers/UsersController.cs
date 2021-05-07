@@ -20,6 +20,12 @@ namespace COA.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Mostrar información de todos los usuarios
+        /// </summary>
+        ///<response code="200">Pedido realizado correctamente</response>
+        ///<response code="400">Error de validación</response>
+        ///<response code="500">"Error interno del servidor"</response>
         [HttpGet]
         public IActionResult Get()
         {
@@ -28,6 +34,15 @@ namespace COA.Api.Controllers
             return Ok(usersResource);
         }
 
+        /// <summary>
+        /// Mostrar información de un usuario específico por su ID
+        /// </summary>
+        /// <param name="id">Id del usuario a mostrar</param>
+        ///<response code="200">Pedido realizado correctamente</response>
+        ///<response code="400">Error de validación</response>
+        ///<response code="400">Id menor a cero</response>
+        ///<response code="404">Id no encontrado</response>
+        ///<response code="500">"Error interno del servidor"</response>
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -36,6 +51,13 @@ namespace COA.Api.Controllers
             return Ok(userResource);
         }
 
+        /// <summary>
+        /// Agregar un nuevo usuario a la base de datos
+        /// </summary>
+        /// <param name="user">Datos del usuario a agregar</param>
+        ///<response code="200">Pedido realizado correctamente</response>
+        ///<response code="400">Error de validación</response>
+        ///<response code="500">"Error interno del servidor"</response>
         [HttpPost]
         public IActionResult Post([FromBody] UserResource user)
         {
@@ -45,6 +67,16 @@ namespace COA.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Actualizar los datos de un usuario ya existente
+        /// </summary>
+        /// <param name="id">Id del usuario a actualizar</param>
+        /// <param name="user">Datos a actualizar o persistir</param>
+        ///<response code="200">Pedido realizado correctamente</response>
+        ///<response code="400">Error de validación</response>
+        ///<response code="400">Id menor a cero</response>
+        ///<response code="404">Id no encontrado</response>
+        ///<response code="500">"Error interno del servidor"</response>
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UserResource user)
         {
@@ -54,6 +86,15 @@ namespace COA.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Eliminar un usuario específico de la base de datos
+        /// </summary>
+        /// <param name="id">ID del usuario a eliminar</param>
+        ///<response code="200">Pedido realizado correctamente</response>
+        ///<response code="400">Error de validación</response>
+        ///<response code="400">Id menor a cero</response>
+        ///<response code="404">Id no encontrado</response>
+        ///<response code="500">"Error interno del servidor"</response>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
