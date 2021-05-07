@@ -27,9 +27,18 @@ namespace COA.Api.Controllers
         ///<response code="400">Error de validación</response>
         ///<response code="500">"Error interno del servidor"</response>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetByPage([FromQuery]int page)
         {
-            var users = _service.GetAll();
+            IEnumerable<Usuario> users;
+            if (page == 0)
+            {
+                users = _service.GetAll();                
+            }
+            else
+            {
+                users = _service.GetPage(page);
+            }
+
             var usersResource = _mapper.Map<IEnumerable<Usuario>, IEnumerable<UserResource>>(users);
             return Ok(usersResource);
         }
@@ -44,7 +53,7 @@ namespace COA.Api.Controllers
         ///<response code="404">Id no encontrado</response>
         ///<response code="500">"Error interno del servidor"</response>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
             var user = _service.GetById(id);
             var userResource = _mapper.Map<Usuario, UserResource>(user);

@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<COA.Mvc.Models.UserViewModel>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common;
+<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewData["Title"] = "Inicio";
 }
@@ -6,16 +11,23 @@
 @if ((string)TempData["success"] == "true")
 {
     <script type="text/javascript">
-        window.onload = function () { successMessage() };
+        addEventListener('load', function () {
+            successMessage()
+        });
     </script>
 }
+<script>
+    addEventListener('load', function () {
+        fixPageButton()
+    });    
+</script>
 <div class="row">
     <h1>Usuarios</h1>
 </div>
 <div class="row">
     <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
 </div>
-<hr />
+<br />
 <div class="row">
     <table class="table table-bordered table-responsive w-auto">
         <thead class="thead-dark">
@@ -52,12 +64,22 @@
                         @Html.DisplayFor(modelItem => item.Telefono)
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }, new { @class = "btn btn-info btn-sm" }) |
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }, new { @class = "btn btn-info btn-sm" })                         
                         <button type="button" class="btn btn-danger btn-sm" onclick="deleteMessage(@item.IdUsuario)">Eliminar</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <br />
+</div>
+<div>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }),
+        new PagedListRenderOptionsBase
+        {
+
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
 </div>
 
