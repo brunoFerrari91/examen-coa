@@ -17,6 +17,7 @@ namespace COA.Mvc.Controllers
             _httpFactory = httpFactory;
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Index()
         {
             try
@@ -68,7 +69,7 @@ namespace COA.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind]UserViewModel newUser)
+        public async Task<IActionResult> Create(UserViewModel newUser)
         {
             if (!ModelState.IsValid)
             {
@@ -95,6 +96,7 @@ namespace COA.Mvc.Controllers
                     var errorMessage = error.ErrorList["error"][0];
                     return View("error", errorMessage);
                 }
+                TempData["success"] = "true";
                 return RedirectToAction("Index", "Home");
             }
             catch
@@ -102,32 +104,8 @@ namespace COA.Mvc.Controllers
                 return View("error");
             }
         }
-
+                
         public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                //Get user to show in view and check if exists
-                var client = _httpFactory.CreateClient("COA-Api");
-                var response = await client.GetAsync($"/api/users/{id}");
-                string content = await response.Content.ReadAsStringAsync();
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    var error = JsonConvert.DeserializeObject<ErrorViewModel>(content);
-                    var errorMessage = error.ErrorList["error"][0];
-                    return View("error", errorMessage);
-                }
-                var user = JsonConvert.DeserializeObject<UserViewModel>(content);
-                return View(user);
-            }
-            catch
-            {
-                return View("error");
-            }
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {

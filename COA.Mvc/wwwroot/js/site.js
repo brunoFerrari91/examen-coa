@@ -1,4 +1,36 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function successMessage() {
+    swal({
+        title: "Cambios realizados correctamente!",
+        icon: "success"
+    })
+}
 
-// Write your JavaScript code.
+function deleteMessage (id){
+    swal({
+        title: "¿Está seguro?",
+        text: "Una vez eliminado no podrá recuperarse",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: 'Home/Delete/',
+                    data: { id: id },
+                    success: swal({
+                        title: "El usuario se ha eliminado",
+                        icon: "success",
+                        button: true
+                    }).then(() => {
+                        window.location.reload();
+                    })
+                });
+            }
+            else {
+                swal({
+                    title: "Usuario no eliminado"
+                });
+            }
+        });
+}
