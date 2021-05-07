@@ -1,4 +1,5 @@
-﻿function fixPageButton() {
+﻿//Corrección para mostrar correctamente los botones de páginas (problema de la librería)
+function fixPageButton() {
     $('ul.pagination > li.disabled > a').addClass('page-link');
 }
 

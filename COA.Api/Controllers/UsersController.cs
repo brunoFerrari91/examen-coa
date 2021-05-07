@@ -21,10 +21,13 @@ namespace COA.Api.Controllers
         }
 
         /// <summary>
-        /// Mostrar información de todos los usuarios
+        /// Mostrar información de usuarios por página
         /// </summary>
+        /// <param name="page">Número de la página a visualizar, si no se pasa ningún valor se muestran todos los usuarios</param>
+
         ///<response code="200">Pedido realizado correctamente</response>
         ///<response code="400">Error de validación</response>
+        ///<response code="404">Página no encontrada</response>
         ///<response code="500">"Error interno del servidor"</response>
         [HttpGet]
         public IActionResult GetByPage([FromQuery]int page)
