@@ -4,10 +4,9 @@
     ViewData["Title"] = "Actualizar";
 }
 
-<hr />
-<div class="row">
+<div class="row mt-3 p-3">
     <div class="col-md-4 jumbotron">
-        <h4>Actualizar</h4>
+        <h1>Actualizar</h1>
         <form asp-action="Create">
             <div class="form-group">
                 @Html.DisplayFor(model => model.IdUsuario)
@@ -38,14 +37,14 @@
                 <input type="submit" value="Confirmar" class="btn btn-primary" />
             </div>
         </form>
-        <div>
-            <a asp-action="Index">
-                <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem" ;></i>Volver a página principal
-            </a>
-        </div>
+
     </div>
 </div>
-
+<div class="row">
+    <a asp-action="Index">
+        <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem" ;></i>Volver a página principal
+    </a>
+</div>
 
 
 @section Scripts {

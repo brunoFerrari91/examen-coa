@@ -2,6 +2,7 @@
 using COA.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace COA.Services
 {
@@ -16,6 +17,16 @@ namespace COA.Services
         public IEnumerable<Usuario> GetAll()
         {
             return _userRepository.GetUsuarios();
+        }
+
+        public IEnumerable<Usuario> GetPage(int page)
+        {
+            var users = _userRepository.GetUsuarios(page);
+            if (users.Any())
+            {
+                return users;
+            }
+            throw new KeyNotFoundException("Página no encontrada");
         }
 
         public Usuario GetById(int id)

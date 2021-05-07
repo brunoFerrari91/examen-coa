@@ -1,4 +1,8 @@
-﻿function successMessage() {
+﻿function fixPageButton() {
+    $('ul.pagination > li.disabled > a').addClass('page-link');
+}
+
+function successMessage() {
     swal({
         title: "Cambios realizados correctamente!",
         icon: "success"

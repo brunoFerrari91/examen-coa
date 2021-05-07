@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace COA.Mvc.Controllers
 {
@@ -18,7 +19,7 @@ namespace COA.Mvc.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             try
             {
@@ -32,7 +33,8 @@ namespace COA.Mvc.Controllers
                     return View("error", errorMessage);
                 }
                 var users = JsonConvert.DeserializeObject<List<UserViewModel>>(content);
-                return View(users);
+                int pageNumber = (page ?? 1);                
+                return View(users.ToPagedList(pageNumber,10));
             }
             catch
             {

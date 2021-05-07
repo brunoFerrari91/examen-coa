@@ -15,7 +15,22 @@ namespace COA.Data
 
         public IEnumerable<Usuario> GetUsuarios()
         {
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.OrderByDescending(u => u.IdUsuario).ToList();
+        }
+
+        public IEnumerable<Usuario> GetUsuarios(int page)
+        {
+            int skipSize = (page - 1) * 10;
+            //negative skip size should not return any page (negative or high numbers)
+            if (skipSize < 0)
+            {
+                return new List<Usuario>();
+            }
+            return _context.Usuarios
+                .OrderByDescending(u => u.IdUsuario)
+                .Skip(skipSize)
+                .Take(10)
+                .ToList();
         } 
 
         public Usuario GetUsuario(int id)
