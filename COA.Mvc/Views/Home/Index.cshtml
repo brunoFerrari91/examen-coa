@@ -4,15 +4,17 @@
 }
 
 @if ((string)TempData["success"] == "true")
-    {
-        <script type="text/javascript">
-            window.onload = function() { successMessage() };
-        </script>
-    }
-
-    <div class="row">
-        <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
-    </div>
+{
+    <script type="text/javascript">
+        window.onload = function () { successMessage() };
+    </script>
+}
+<div class="row">
+    <h1>Usuarios</h1>
+</div>
+<div class="row">
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+</div>
 <hr />
 <div class="row">
     <table class="table table-bordered table-responsive w-auto">
@@ -51,7 +53,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }, new { @class = "btn btn-info btn-sm" }) |
-                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteMessage(@item.IdUsuario)">Eliminar</button>                        
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteMessage(@item.IdUsuario)">Eliminar</button>
                     </td>
                 </tr>
             }

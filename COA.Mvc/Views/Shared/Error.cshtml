@@ -3,16 +3,27 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">Ha ocurrido un error al procesar su pedido</h2>
-@if (Model != null)
-{
-    <p>
-        @Model
-    </p>
-}
+<div class="alert-danger m-1">
+    <h1>¡Error!</h1>
+    <h2>Ha ocurrido un error al procesar su pedido:</h2>
+    @if (Model != null)
+    {
+        <h4>
+            @Model
+        </h4>
+
+    }
+    else
+    {
+        <h4>
+            Si el problema persiste comuniquese con el administrador
+        </h4>
+    }
+</div>
 <div>
-    <a asp-action="Index">Volver a Página principal</a>
+    <a asp-action="Index">
+        <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem" ;></i>Volver a página principal
+    </a>
 </div>
 
 
