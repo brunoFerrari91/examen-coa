@@ -4,14 +4,12 @@
     ViewData["Title"] = "Actualizar";
 }
 
-<h1>Actualizar</h1>
-
-<h4>Usuario</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">        
+    <div class="col-md-4 jumbotron">
+        <h4>Actualizar</h4>
         <form asp-action="Create">
-            <div class=form-group>
+            <div class="form-group">
                 @Html.DisplayFor(model => model.IdUsuario)
                 @Html.HiddenFor(m => m.IdUsuario)
             </div>
@@ -40,12 +38,15 @@
                 <input type="submit" value="Confirmar" class="btn btn-primary" />
             </div>
         </form>
+        <div>
+            <a asp-action="Index">
+                <i class="bi bi-arrow-bar-left" style="font-size: 1.5rem" ;></i>Volver a página principal
+            </a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver a Página principal</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

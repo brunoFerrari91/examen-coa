@@ -1,52 +1,61 @@
 ﻿@model IEnumerable<COA.Mvc.Models.UserViewModel>
-
 @{
     ViewData["Title"] = "Inicio";
 }
 
-<h1>Usuarios</h1>
+@if ((string)TempData["success"] == "true")
+    {
+        <script type="text/javascript">
+            window.onload = function() { successMessage() };
+        </script>
+    }
 
-<p>
-    <a asp-action="Create">Crear nuevo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdUsuario })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+    </div>
+<hr />
+<div class="row">
+    <table class="table table-bordered table-responsive w-auto">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }, new { @class = "btn btn-info btn-sm" }) |
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteMessage(@item.IdUsuario)">Eliminar</button>                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
