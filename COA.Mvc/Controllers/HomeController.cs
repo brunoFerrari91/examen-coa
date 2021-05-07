@@ -125,5 +125,10 @@ namespace COA.Mvc.Controllers
                 return View("error");
             }
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }
